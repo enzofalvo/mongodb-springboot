@@ -3,6 +3,7 @@ package com.enzofalvo.applicationMongodb.resources;
 import com.enzofalvo.applicationMongodb.domain.User;
 import com.enzofalvo.applicationMongodb.dto.UserDTO;
 import com.enzofalvo.applicationMongodb.services.UserService;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,9 +11,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -37,5 +40,17 @@ public class UserResource {
         User obj = service.findById(id);
        
         return ResponseEntity.ok().body(new UserDTO(obj));
+    }
+    
+    @RequestMapping(method = RequestMethod.POST)
+    //this id with {id}
+    public ResponseEntity<Void> Insert(@RequestBody UserDTO objDto) {
+        //convert from dto to user
+        User obj = service.fromDTO(objDto);
+        obj = service.insert(obj);
+       
+        //getting the address of the new object received
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }

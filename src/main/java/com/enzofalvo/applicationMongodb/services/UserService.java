@@ -2,6 +2,7 @@
 package com.enzofalvo.applicationMongodb.services;
 
 import com.enzofalvo.applicationMongodb.domain.User;
+import com.enzofalvo.applicationMongodb.dto.UserDTO;
 import com.enzofalvo.applicationMongodb.repository.UserRepository;
 import com.enzofalvo.applicationMongodb.services.exception.ObjectNotFoundException;
 import java.util.List;
@@ -23,5 +24,13 @@ public class UserService {
         Optional<User> obj = repo.findById(id);
         
         return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found"));
+    }
+    
+    public User insert (User obj) {
+        return repo.insert(obj);
+    }
+    
+    public User fromDTO (UserDTO objDto) {
+        return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
     }
 }
