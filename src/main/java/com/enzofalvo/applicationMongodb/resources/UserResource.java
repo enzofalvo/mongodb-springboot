@@ -38,27 +38,35 @@ public class UserResource {
     //this id with {id}
     public ResponseEntity<UserDTO> findById(@PathVariable String id) {
         User obj = service.findById(id);
-       
+
         return ResponseEntity.ok().body(new UserDTO(obj));
     }
-    
+
     @RequestMapping(method = RequestMethod.POST)
     //this id with {id}
     public ResponseEntity<Void> Insert(@RequestBody UserDTO objDto) {
         //convert from dto to user
         User obj = service.fromDTO(objDto);
         obj = service.insert(obj);
-       
+
         //getting the address of the new object received
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
-    
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    //this id with {id}
     public ResponseEntity<Void> delete(@PathVariable String id) {
         service.delete(id);
-       
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> Insert(@RequestBody UserDTO objDto, @PathVariable String id) {
+        User obj = service.fromDTO(objDto);
+        obj.setId(id);
+        obj = service.update(obj);
+
         return ResponseEntity.noContent().build();
     }
 }
