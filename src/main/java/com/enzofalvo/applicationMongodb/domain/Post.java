@@ -1,6 +1,7 @@
 
 package com.enzofalvo.applicationMongodb.domain;
 
+import com.enzofalvo.applicationMongodb.dto.AuthorDTO;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -15,12 +16,12 @@ public class Post implements Serializable {
     private String title;
     private String body;
     
-    private User author;
+    private AuthorDTO author;
     
     public Post() {
     }
 
-    public Post(String id, Date date, String title, String body, User author) {
+    public Post(String id, Date date, String title, String body, AuthorDTO author) {
         this.id = id;
         this.date = date;
         this.title = title;
@@ -60,12 +61,12 @@ public class Post implements Serializable {
         this.body = body;
     }
 
-    public User getAutor() {
+    public AuthorDTO getAuthor() {
         return author;
     }
 
-    public void setAutor(User autor) {
-        this.author = autor;
+    public void setAuthor(AuthorDTO autor) {
+        this.author = author;
     }
 
     @Override
@@ -92,6 +93,4 @@ public class Post implements Serializable {
         }
         return true;
     }
-    
-    
 }
