@@ -2,7 +2,6 @@
 package com.enzofalvo.applicationMongodb.services;
 
 import com.enzofalvo.applicationMongodb.domain.Post;
-import com.enzofalvo.applicationMongodb.domain.User;
 import com.enzofalvo.applicationMongodb.repository.PostRepository;
 import com.enzofalvo.applicationMongodb.services.exception.ObjectNotFoundException;
 import java.util.List;
@@ -23,7 +22,7 @@ public class PostService {
     }
     
     public List<Post> findByTitle(String text) {
-        return repo.findByTitleContainingIgnoreCase(text);
+        return repo.SearchTitle(text);
     }
 }
    
